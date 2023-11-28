@@ -1,0 +1,65 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% load custom_filters %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+Courses
+{% endblock title %}
+
+
+{% block body %}
+  <div class="section layout_padding">
+    <div class="container">
+      <div class="row">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addCourseModal">Add New Course</button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="addCourseModal" tabindex="-1" role="dialog" aria-labelledby="courseModalLongTitle" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Add Course</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              </div>
+              <form action="#" method="post" enctype="multipart/form-data">
+                <div class="modal-body">
+                  {% csrf_token %}
+                  {{ course_form|crispy }}
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="full">
+            <div class="heading_main text_align_center">
+              <h2><span>Your</span>Courses</h2>
+            </div>
+          </div>
+        </div>
+        {% for course in courses %}
+          <div class="card text_align_center mr-3" style="width: 18rem;">
+            <img class="card-img-top" src="{{ course.poster_url.url }}" alt="{{ course.title }}" />
+            <div class="card-body">
+              <h5 class="card-title">{{ course.title }}</h5>
+              <p class="card-text">{{ course.description }}</p>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">{{ course.instructor.first_name }} {{ course.instructor.last_name }}</li>
+            </ul>
+            <div class="card-body">
+              <a href="{% url 'instructor-modules' course.id %}" class="btn btn-primary">Open</a>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endblock %}

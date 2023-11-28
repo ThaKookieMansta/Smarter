@@ -1,0 +1,89 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% load custom_filters %}
+{% load crispy_forms_tags %}
+
+{% block body %}
+  <div class="section layout_padding">
+    <div class="container">
+
+      <section>
+        <div class="inner">
+          <form method="get">
+            <div class="fields">
+
+              {{course_filter.form|crispy}}
+              
+                        <div class="field half text-right">
+                <ul class="actions">
+                  <li><input type="submit" value="Search" class="primary" hidden='true'></li>
+                </ul>
+              </div>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="full">
+            <div class="heading_main text_align_center">
+              <h2><span>Enrolled</span>Courses</h2>
+            </div>
+          </div>
+        </div>
+
+        {% for course in courses %}
+          {% if student_profile|is_enrolled:course %}
+            <div class="card text_align_center mr-3" style="width: 18rem;">
+              <img class="card-img-top" src="{{ course.poster_url.url }}" alt="{{ course.title }}" />
+              <div class="card-body">
+                <h5 class="card-title">{{ course.title }}</h5>
+                <p class="card-text">{{ course.description }}</p>
+              </div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">{{ course.instructor.first_name }} {{ course.instructor.last_name }}</li>
+              </ul>
+              <div class="card-body">
+                {% if student_profile|is_enrolled:course %}
+                  <a href="{% url 'course' course.id %}" class="btn btn-primary">Open</a>
+                {% else %}
+                  <a href="{% url 'enroll' course.id %}" class="btn btn-primary">Enroll</a>
+                {% endif %}
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="full">
+            <div class="heading_main text_align_center">
+              <h2><span>Featured</span>Courses</h2>
+            </div>
+          </div>
+        </div>
+        {% for course in courses %}
+          <div class="card text_align_center mr-3" style="width: 18rem;">
+            <img class="card-img-top" src="{{ course.poster_url.url }}" alt="{{ course.title }}" />
+            <div class="card-body">
+              <h5 class="card-title">{{ course.title }}</h5>
+              <p class="card-text">{{ course.description }}</p>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">{{ course.instructor.first_name }} {{ course.instructor.last_name }}</li>
+            </ul>
+            <div class="card-body">
+              {% if student_profile|is_enrolled:course %}
+                <a href="{% url 'course' course.id %}" class="btn btn-primary">Open</a>
+              {% else %}
+                <a href="{% url 'enroll' course.id %}" class="btn btn-primary">Enroll</a>
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load custom_filters %}
+
+{% block title %}
+{{course}} Modules
+{% endblock title %}
+
+
+{% block body %}
+  <div class="section layout_padding">
+    <div class="container">
+      {% if logstat.role == 2 %}
+        <div class="row">
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModuleModal">Add New Module</button>
+
+          <!-- Modal -->
+          <div class="modal fade" id="addModuleModal" tabindex="-1" role="dialog" aria-labelledby="moduleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLongTitle">Add Module</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <form action="#" method="post" enctype="multipart/form-data">
+                  <div class="modal-body">
+                    {% csrf_token %}
+                    {{ module_form|crispy }}
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+      <div class="row">
+        <div class="col-md-12">
+          <div class="full">
+            <div class="heading_main text_align_center">
+              <h2><span>{{ course }}</span> Modules</h2>
+            </div>
+          </div>
+        </div>
+        {% for module in modules %}
+          <div class="card text_align_center mr-3" style="width: 18rem;">
+            <img class="card-img-top" src="{{ module.poster_url.url }}" alt="{{ module.title }}" />
+            <div class="card-body">
+              <h5 class="card-title">{{ module.title }}</h5>
+            </div>
+            <div class="card-body">
+              <a href="{% url 'instructor-lessons' module.id %}" class="btn btn-primary">Open</a>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endblock %}
+{% comment %} {% for module in modules %}
+  <p>
+    <a href="{% url 'lessons' module.id %}">{{ module.title }}</a>
+  </p>
+{% endfor %} {% endcomment %}

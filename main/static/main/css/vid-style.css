@@ -1,0 +1,54 @@
+.plyr {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  max-width: 1000px;
+  min-width: 500px;
+  position: relative;
+  text-shadow: none;
+  transition: box-shadow 0.3s ease;
+  z-index: 0;
+}
+
+.bottom-container,
+.video-container {
+    margin: 7% 5.9% 0 5.9%;
+    display: grid;
+    grid-template-columns: 60% 40%;
+    
+}
+
+.lesson-side {
+    margin: 12px 0 0 10px;
+    width: 65%;
+}
+
+
+.my-class {
+  margin: 7% 5.9% 0 5.9%;
+}
+
+#course-title{
+  font-size: 0.75rem;
+  font-family: sans-serif;
+}
+
+.bottom-container{
+  border-top-width: 2px;
+  border-top-color: gray;
+  border-top-style: solid;
+}
+
+.bottom-container .left-side {
+  border-right-width: 2px;
+  border-right-color: gray;
+  border-right-style: solid;
+}
+
+.bottom-container .right-side {
+  margin-left: 40px;
+}
+
+.bottom-container h1 {
+  margin-top: 20px;
+}

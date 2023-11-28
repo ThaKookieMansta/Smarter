@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Homepage</title>
+  </head>
+  <body>
+    {% if lesson.video_url %}
+      <!-- Basic HTML5 Video Player -->
+      <video id="player" playsinline controls data-poster="{{ lesson.poster_url.url }}">
+        <source src="{{ lesson.video_url.url }}" type="video/mp4" />
+      </video>
+
+      <h1>{{ lesson.title }}</h1>
+      <h2>{{ lesson.module.title }}</h2>
+      <h3>{{ lesson.module.course.title }}</h3>
+
+      <!-- Add a library for more advanced features (e.g., Plyr) -->
+      <!-- Example using Plyr (https://plyr.io/) -->
+      <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+      <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
+      <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          // Initialize Plyr video player
+          const player = new Plyr('#player')
+        })
+      </script>
+    {% else %}
+      <p>No video available for this lesson.</p>
+    {% endif %}
+  </body>
+</html>

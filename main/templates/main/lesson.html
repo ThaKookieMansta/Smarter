@@ -1,0 +1,71 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% load custom_filters %}
+
+{% block title %}
+{{lesson.title}} 
+{% endblock title %}
+
+
+{% block body %}
+  <div class="video-container">
+    <div class="video-side">
+      <h3 id="course-title"><a href="{% url 'course' lesson.module.course.id %}">{{ lesson.module.course.title }}</a>/ <a href="{% url 'lessons' lesson.module.id %}">{{ lesson.module.title }}</a></h3>
+
+      {% if lesson.video_url %}
+        <!-- Basic HTML5 Video Player -->
+        <video id="player" playsinline controls data-poster="{{ lesson.poster_url.url }}" preload="auto">
+          <source src="{{ lesson.video_url.url }}" type="video/mp4" />Your browser does not support the video tag.
+        </video>
+
+        {% if logstat.role == 2 %}
+        <h1>{{ lesson.title }}</h1>
+        {% endif %}
+
+        <!-- Add a library for more advanced features (e.g., Plyr) -->
+        <!-- Example using Plyr (https://plyr.io/) -->
+      {% else %}
+        <p>No video available for this lesson.</p>
+      {% endif %}
+    </div>
+    <div class="lesson-side">
+      <ul class="list-group">
+        {% for i in list %}
+          <li class="list-group-item" aria-current="true">
+            <a href="{% url 'lesson' i.id %}">{{ i }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+{% if logstat.role == 1 %}
+  <div class="bottom-container">
+    <div class="left-side">
+      <h1>{{ lesson.title }}</h1>
+      <p>{{ lesson.instructor_notes }}</p>
+    </div>
+    <div class="right-side">
+      <h1>New Courses</h1>
+      {% for course in courses %}
+        <div class="card text_align_center" style="width: 18rem; margin-bottom: 50px;">
+          <img class="card-img-top" src="{{ course.poster_url.url }}" alt="{{ course.title }}" />
+          <div class="card-body">
+            <h5 class="card-title">{{ course.title }}</h5>
+            <p class="card-text">{{ course.description }}</p>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">{{ course.instructor.first_name }} {{ course.instructor.last_name }}</li>
+          </ul>
+          <div class="card-body">
+            {% if student_profile|is_enrolled:course %}
+              <a href="{% url 'course' course.id %}" class="btn btn-primary">Open</a>
+            {% else %}
+              <a href="{% url 'enroll' course.id %}" class="btn btn-primary">Enroll</a>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+{% endblock %}

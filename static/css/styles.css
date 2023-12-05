@@ -53,6 +53,6 @@ body {
   background-size: cover;
   color: rgb(0, 0, 0);
   line-height: 1.6;
-  height: 100vh;
+  /* height: 100vh; */
   padding: 3.3rem 2rem;
 }

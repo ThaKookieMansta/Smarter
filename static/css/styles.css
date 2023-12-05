@@ -56,3 +56,11 @@ body {
   /* height: 100vh; */
   padding: 3.3rem 2rem;
 }
+
+#video h1{
+  margin-bottom: 2rem;
+}
+
+#video {
+  text-align: center;
+}

@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.views import LogoutView
+from django.contrib.auth.views import (LogoutView, PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView,
+                                       PasswordResetCompleteView)
 from django.urls import path, include
 
 from main import views
@@ -20,4 +21,9 @@ urlpatterns = [
     path('instructor-courses/',views.instructor_courses, name='instructor-courses'),
     path('instructor-modules/<int:id>/', views.instructor_modules, name='instructor-modules'),
     path('instructor-lessons/<int:id>/', views.instructor_lesson, name='instructor-lessons'),
+    path('reset_password/', PasswordResetView.as_view(template_name="main/password_reset.html"), name='reset_password'),
+    path('reset_password_sent/', PasswordResetDoneView.as_view(template_name="main/password_reset_sent.html"), name='password_reset_done'),
+    path('reset/<uidb64>/<token>/', PasswordResetConfirmView.as_view(template_name="main/password_reset_form.html"), name='password_reset_confirm'),
+    path('reset_password_complete/', PasswordResetCompleteView.as_view(template_name="main/password_reset_done.html"), name='password_reset_complete'),
+
 ]

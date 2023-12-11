@@ -39,7 +39,7 @@ def index(request):
 def user_login(request):
     if request.method == "GET":
         signin_form = AuthenticationForm()
-        return render(request, 'main/sign-up.html', {
+        return render(request, 'main/login.html', {
             "form": signin_form
         })
 
@@ -58,7 +58,7 @@ def user_login(request):
                 # Redirect to a success page
                 return redirect('check-role')
             else:
-                return render(request, 'main/sign-up.html', {
+                return render(request, 'main/login.html', {
                     "form": signin_form, })
         else:
             form = AuthenticationForm(request)

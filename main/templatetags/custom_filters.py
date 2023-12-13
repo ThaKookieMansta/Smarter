@@ -5,6 +5,15 @@ register = template.Library()
 
 @register.filter(name='is_enrolled')
 def is_enrolled(student_profile, course):
+    """
+    This filter checks the enrollment status of a student
+    Args:
+        student_profile:
+        course:
+
+    Returns:
+
+    """
     try:
         # Attempt to treat student_profile as a queryset
         return StudentCourse.objects.filter(student=student_profile, course=course).exists()

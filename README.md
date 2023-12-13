@@ -15,13 +15,13 @@ We have assembled a dynamic team of experts to bring the SMARTER project to life
 The smarter e-learning platform has been turned into a docker image and is accessible with the following command.
 
 ```commandline
-docker pull thakookiemansta/smarter-v1
+docker pull thakookiemansta/smarter
 ```
 
 After that, run the image with the following command
 
 ```commandline
-docker run -it -p 8000:8000 thakookiemansta/smarter-v1
+docker run -it -p 8000:8000 thakookiemansta/smarter:version1.1
 ```
 
 The program will now be accessible through the URL  

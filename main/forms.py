@@ -1,3 +1,7 @@
+"""
+Forms for the Smarter main application
+"""
+
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.db import transaction
@@ -7,12 +11,18 @@ from main.models import Course, StudentCourse, UserProfile, InstructorCourse, Co
 
 
 class SignUpForm(UserCreationForm):
+    """
+    This class creates the form for the user creation model
+    """
     class Meta(UserCreationForm.Meta):
         model = UserProfile
         fields = ["username", "first_name", "last_name", "email", "language_preference", "role"]
 
 # Instructor Form for uploading content
 class CourseForm(forms.ModelForm):
+    """
+        This class creates the form for the course model
+        """
     class Meta:
         model = Course
         fields = ['title', 'description', 'poster_url']
@@ -27,6 +37,9 @@ class CourseForm(forms.ModelForm):
     #     )
 
 class ModuleForm(forms.ModelForm):
+    """
+        This class creates the form for the module model
+        """
     class Meta:
         model = CourseModule
         fields = ['title', 'poster_url']
@@ -40,6 +53,9 @@ class ModuleForm(forms.ModelForm):
     #     )
 
 class LessonForm(forms.ModelForm):
+    """
+        This class creates the form for the Lesson model
+        """
     class Meta:
         model = Lesson
         fields = ['title', 'video_url', 'poster_url', 'instructor_notes']

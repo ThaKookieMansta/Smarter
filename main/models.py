@@ -1,3 +1,7 @@
+"""
+Models configuration for the Smarter Main application
+"""
+
 from django.contrib.auth.models import User, AbstractUser
 from django.db import models
 
@@ -5,6 +9,10 @@ from django.db import models
 # Create your models here.
 
 class UserProfile(AbstractUser):
+    """
+    This class extends the Django user class and creates a user according to
+    the user needs
+    """
     ROLE_CHOICES = [
         (1, "Student"),
         (2, "Instructor"),
@@ -25,6 +33,9 @@ class UserProfile(AbstractUser):
 
 
 class Course(models.Model):
+    """
+    This class creates the course table which holds the course data
+    """
     title = models.CharField(max_length=1000, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     poster_url = models.FileField("Thumbnail", upload_to='posters/', default='posters/img2.png' )
@@ -38,16 +49,25 @@ class Course(models.Model):
 
 
 class StudentCourse(models.Model):
+    """
+    This class creates the student course table in the database
+    """
     student = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     course = models.ManyToManyField(Course)
 
 
 class InstructorCourse(models.Model):
+    """
+        This class creates the instructor course table in the database
+        """
     instructor = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     course = models.ManyToManyField(Course)
 
 
 class CourseModule(models.Model):
+    """
+        This class creates the  course module table in the database
+        """
     course = models.ForeignKey(Course, on_delete=models.CASCADE,  db_constraint=False)
     title = models.CharField(max_length=255)
     poster_url = models.FileField("Thumbnail", upload_to='posters/', default='posters/img2.png' )
@@ -57,6 +77,9 @@ class CourseModule(models.Model):
 
 
 class Lesson(models.Model):
+    """
+        This class creates the lessons table in the database
+        """
     module = models.ForeignKey(CourseModule, on_delete=models.CASCADE,  db_constraint=False)
     title = models.CharField(max_length=255)
     video_url = models.FileField("Video", upload_to='videos/')
